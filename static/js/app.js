@@ -8,19 +8,19 @@ function buildDash(microbials) {
         console.log(`Washing Frequency: ${wfreq}`);
 
         // Filter samples by id
-        var ids = data.sample_test.filter(i => i.id.toString() === microbials)[0];
+        var ids = data.samples.filter(i => i.id.toString() === microbials)[0];
         console.log(ids);
 
         // Top 10 sample values
-        var sample_values = sample_test.sample_values.slice(0, 10);
+        var sample_values = data.samples.sample_values.slice(0, 10);
         console.log(samples);
 
         // Labels for the bar chart
-        var labels = sample_test.otu_labels.slice(0, 10);
+        var labels = data.samples.otu_labels.slice(0, 10);
         console.log(labels);
 
         // Top 10 OTU ids
-        var otu_ids = sample_test.otu_ids.slice(0, 10);
+        var otu_ids = data.samples.otu_ids.slice(0, 10);
         console.log(otu_ids);
 
         // Trace for bar chart
@@ -58,9 +58,16 @@ buildDash()
 
 // Displays default plot
 function init() {
-
+    // D3 to select the dropdown menu
     var dropdown = d3.select("#selDataset");
+    // Assign dropdown menu ID to a variable
+    var dropdownID = dropdown.id;
+    // Assign dropdown menu option to a variable
+    var selectOption = dropdown.value;
 
+    console.log(dropdownID);
+    console.log(selectOption);
+    
     // D3 to read in json file
     d3.json("samples.json").then((data) => {
         console.log(data)
@@ -78,5 +85,6 @@ function init() {
     };
 
     Plotly.newPlot("bar", data, layout);
+    });
 }
 
